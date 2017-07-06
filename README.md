@@ -22,15 +22,15 @@ The second issue is that the EEPROM design limit of 100,000 write cycles. If you
 The Library solves both of these problems by using these techniques:
 
 
-It does all this with four functions:
-
+## It does all this with four functions:
+```c
 void loadEeprom(uint8_t ASegment)
 uint16_t getValue(uint8_t ASegment)
 void writeValue(uint8_t ASegment, uint16_t value)
-
+```
 The first IMPORTANT thing I want to mention is the ORDER these commands must be used.
 
-You must call loadEeprom(uint8_t ASegment). After that you can call getValue(uint8_t ASegment) & writeValue(uint8_t ASegment, uint16_t value) as many times as you like.
+You must call ```cloadEeprom(uint8_t ASegment)```. After that you can call ```cgetValue(uint8_t ASegment)``` & ```cwriteValue(uint8_t ASegment, uint16_t value)``` as many times as you like.
 The reason for this order is that Save requires variables that Load set to work properly.
 This shouldn't be a problem because the general flow of usage for these commands should follow this order:
 
@@ -52,7 +52,6 @@ writeValue(1, 3);
 }
 }
 ```
-......................................
 
 ### For Arduino:
 ```c

@@ -34,7 +34,7 @@ You must call loadEeprom(uint8_t ASegment). After that you can call getValue(uin
 The reason for this order is that Save requires variables that Load set to work properly.
 This shouldn't be a problem because the general flow of usage for these commands should follow this order:
 
-# For WinAVR/AVR Studio:
+### For WinAVR/AVR Studio:
 ```c
 int main(void)
 {
@@ -51,10 +51,10 @@ writeValue(0, 2);
 writeValue(1, 3);
 }
 }
-```c
+```
 ......................................
 
-# For Arduino:
+### For Arduino:
 ```c
 void setup() {
 Serial.begin(115200);
@@ -74,7 +74,7 @@ writeValue(1, 6);
 delay(200);
 
 }
-```c
+```
 Make sure you don't just call save to save the same data as this is wasteful on EEPROM design life.
 Keep a flag that indicates when the data has changed and also a flag indicating how long it has been since that last save.
 Only save if the data has changed AND it has been a long enough period of time.

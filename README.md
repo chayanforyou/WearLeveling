@@ -1,7 +1,7 @@
 # WearLeveling
 
 The technique I am useing is to prefix the data with a 4-byte rolling sequence number where the largest number represents the lastest / current value.
-In the case of storing 2 bytes of actual data that would give 6 (4-for sequence & 2-for data) bytes total and then I form into a circular queue arrangement so for 1024 bytes of EEPROM it would contain 170 entries and increase endurance 170 times.
+In the case of storing 2 bytes of actual data that would give 6 (4-for sequence & 2-for data) bytes total and then I form into a circular queue arrangement so for 1024 bytes of EEPROM (if your EEPROM size is small or max you have to change the value from library file) it would contain 170 entries and increase endurance 170 times if you use one Segment.
 
 Then when booting the largest sequence number can be used to determine both the next sequence number to be used and the current tail of the queue.
 The following C-code demonstrates, this assumes that upon initial programming the EEPROM area has been erased to values of 0xFF so I ignore a sequence number of 0xFFFFFFFF (as 4-byte sequence no):

@@ -22,7 +22,7 @@ The second issue is that the EEPROM design limit of 100,000 write cycles. If you
 The Library solves both of these problems by using these techniques:
 
 
-## It does all this with four functions:
+## It does all this with three functions:
 ```c
 void loadEeprom(uint8_t ASegment);
 uint16_t getValue(uint8_t ASegment);
@@ -41,15 +41,15 @@ int main(void)
 loadEeprom(0);
 loadEeprom(1);
 
-print(getValue(0));
-print(getValue(1));
+printf(getValue(0));
+printf(getValue(1));
 
 while (1)
 {
 writeValue(0, 2);
 
 writeValue(1, 3);
-}
+  }
 }
 ```
 

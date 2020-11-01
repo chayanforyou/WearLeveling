@@ -36,7 +36,7 @@ You must call `loadEeprom(uint8_t ASegment)`. After that you can call `getValue(
 The reason for this order is that Save requires variables that Load set to work properly.
 This shouldn't be a problem because the general flow of usage for these commands should follow this order:
 
-### For Arduino:
+### Arduino Example:
 ```c
 #include <EEPROMWearLevel.h>
 

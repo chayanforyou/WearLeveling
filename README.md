@@ -24,9 +24,11 @@ The Library solves both of these problems by using these techniques:
 
 ## It does all this with three functions:
 ```c
-void loadEeprom(uint8_t ASegment);
-uint16_t getValue(uint8_t ASegment);
-void writeValue(uint8_t ASegment, uint16_t value);
+EEPROMwl.begin(const uint8_t amountOfIndexes);
+// or
+EEPROMwl.begin(const uint8_t amountOfIndexes, const uint16_t eepromLengthToUse);
+EEPROMwl.read(const uint8_t idx)
+EEPROMwl.write(const uint8_t idx, const uint16_t value);
 ```
 The first IMPORTANT thing I want to mention is the ORDER these commands must be used.
 
@@ -34,44 +36,41 @@ You must call `loadEeprom(uint8_t ASegment)`. After that you can call `getValue(
 The reason for this order is that Save requires variables that Load set to work properly.
 This shouldn't be a problem because the general flow of usage for these commands should follow this order:
 
-### For WinAVR/AVR Studio:
-```c
-int main(void)
-{
-loadEeprom(0);
-loadEeprom(1);
-
-printf(getValue(0));
-printf(getValue(1));
-
-while (1)
-{
-writeValue(0, 2);
-
-writeValue(1, 3);
-  }
-}
-```
-
 ### For Arduino:
 ```c
+#include <EEPROMWearLevel.h>
+
+#define AMOUNT_OF_INDEXES 2
+
+#define INDEX_VAL1 0
+#define INDEX_VAL2 1
+
 void setup() {
-Serial.begin(115200);
+  Serial.begin(9600);
+  while (!Serial);
 
-loadEeprom(0);
-loadEeprom(1);
+  EEPROMwl.begin(AMOUNT_OF_INDEXES);
 
-Serial.println(getValue(0));
-Serial.println(getValue(1));
-
+  writeConfiguration();
+  readConfiguration();
 }
 
 void loop() {
-writeValue(0, 5);
-writeValue(1, 6);
+}
 
-delay(200);
+void writeConfiguration() {
+  // write value
+  EEPROMwl.write(INDEX_VAL1, 123);
+  EEPROMwl.write(INDEX_VAL2, 32768);
+}
 
+void readConfiguration() {
+  // read value
+  Serial.print(F("INDEX 1: "));
+  Serial.println(EEPROMwl.read(INDEX_VAL1));
+
+  Serial.print(F("INDEX 2: "));
+  Serial.println(EEPROMwl.read(INDEX_VAL2));
 }
 ```
 Make sure you don't just call save to save the same data as this is wasteful on EEPROM design life.

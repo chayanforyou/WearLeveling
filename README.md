@@ -77,11 +77,11 @@ Make sure you don't just call `EEPROMwl.write()` to save the `same data` as this
 Keep a flag that indicates when the data has changed and also a flag indicating how long it has been since that last save.
 Only save if the data has changed AND it has been a long enough period of time.
 
+## Special Thanks ##
+To [Antor Ahmed](https://github.com/AntorOfficial)
+
 ## Contributions ##
 Enhancements and improvements are welcome.
-
-### Special Thanks 
-To [Antor Ahmed](https://github.com/AntorOfficial)
 
 ## License ##
 ```

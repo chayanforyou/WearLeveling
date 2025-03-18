@@ -7,7 +7,6 @@
 
 void setup() {
   Serial.begin(9600);
-  while (!Serial);
 
   EEPROMwl.begin(AMOUNT_OF_INDEXES);
   // Here 512 is length of the EEPROM used for wear leveling in case you want

@@ -3,8 +3,7 @@
 
 #include <EEPROM.h>
 
-#define QUEUE_SIZE 6
-#define EEPROM_SIZE EEPROMClass::length()
+#define QUEUE_SIZE sizeof(EEPROMWearLevel::QUEUE)
 
 class EEPROMWearLevel: EEPROMClass {
   public:
@@ -15,7 +14,7 @@ class EEPROMWearLevel: EEPROMClass {
         @param amountOfIndexes the amount of indexes you want to use.
     */
     void begin(const uint8_t amountOfIndexes);
-	
+
     /**
         Initialises EEPROMWearLevel. One of the begin() methods must be called
         before any other method.
@@ -24,33 +23,39 @@ class EEPROMWearLevel: EEPROMClass {
         to use parts of the EEPROM for other purpose.
     */
     void begin(const uint8_t amountOfIndexes, const uint16_t eepromLengthToUse);
-	
+
     /**
        reads one byte from idx
     */
-	uint16_t read(const uint8_t idx);
+    uint16_t read(const uint8_t idx);
+
+    /**
+      writes one byte if it is not the same as the last one.
+    */
+    void update(const uint8_t idx, const uint16_t val);
 
     /**
        writes one byte no matter what value was written before.
     */
-	void write(const uint8_t idx, const uint16_t value);
-	
-  private:
-	struct QUEUE {
-		uint32_t sequence_no;
-		uint16_t my_data;
-	} *QUEUE_ENTRY;
+    void write(const uint8_t idx, const uint16_t val);
 
-	uint32_t *last_sequence_no;
-	uint8_t  *queue_tail;
-	uint16_t *lastValue;
-	uint16_t QUEUE_ENTRIES;
-	
+  private:
+    struct QUEUE {
+      uint32_t sequenceNo;
+      uint16_t data;
+    };
+
+    QUEUE* queueEntries = nullptr;
+    uint32_t* lastSequenceNo = nullptr;
+    uint8_t* queueTail = nullptr;
+    uint16_t* lastValue = nullptr;
+    uint16_t queueEntriesCount = 0;
+
     /**
        reads the last written value of idx or leaves t unchanged if no
        value written yet.
     */
-	void getLastSavedValue(const uint8_t idx);
+    void getLastSavedValue(const uint8_t idx);
     /**
        returns the current queue tail.
        This method can be called to use EEPROMWEarLevel as a ring buffer.
@@ -63,5 +68,4 @@ class EEPROMWearLevel: EEPROMClass {
 */
 extern EEPROMWearLevel EEPROMwl;
 
-#endif	// #ifndef EEPROM_WEAR_LEVEL_H
-
+#endif  // #ifndef EEPROM_WEAR_LEVEL_H

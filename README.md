@@ -65,6 +65,7 @@ EEPROMwl.begin(const uint8_t amountOfIndexes);
 EEPROMwl.begin(const uint8_t amountOfIndexes, const uint16_t eepromLengthToUse);
 EEPROMwl.read(const uint8_t idx)
 EEPROMwl.write(const uint8_t idx, const uint16_t value);
+EEPROMwl.update(const uint8_t idx, const uint16_t value);
 ```
 The first IMPORTANT thing I want to mention is the ORDER these commands must be used.
 
